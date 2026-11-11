@@ -1285,12 +1285,16 @@ def _compute_rsi(close: pd.Series, period: int = 14) -> float | None:
     delta = close.diff()
     gain = delta.clip(lower=0).rolling(period).mean()
     loss = (-delta.clip(upper=0)).rolling(period).mean()
-    rs = gain / loss.replace(0, pd.NA)
-    rsi = 100 - (100 / (1 + rs))
-    value = rsi.iloc[-1]
-    if pd.isna(value):
+    last_gain = gain.iloc[-1]
+    last_loss = loss.iloc[-1]
+    if pd.isna(last_gain) or pd.isna(last_loss):
         return None
-    return float(value)
+    if last_loss == 0:
+        # No down moves in the window: RSI is 100 by definition (all gains),
+        # undefined only when the price did not move at all.
+        return 100.0 if last_gain > 0 else None
+    rs = float(last_gain) / float(last_loss)
+    return 100 - (100 / (1 + rs))
 
 
 def _classify_rsi(value: float | None) -> str:
