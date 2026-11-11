@@ -44,7 +44,7 @@ NEWSNOW_BASE_URL=https://newsnow.busiyi.world
 
 **外部依赖兼容性说明：**
 
-- **官方项目与部署指南**：https://github.com/qqhann/newsnow
+- **官方项目与部署指南**：https://github.com/newsnext/newsnow
 - **当前默认值** `https://newsnow.busiyi.world` 是公开示例实例，**非官方部署**，存在以下风险：
   - 可能因官方维护、限流或停止服务而不可用
   - 不保证稳定性、可靠性或数据准确性，仅用于演示和测试
